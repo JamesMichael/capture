@@ -1,0 +1,9 @@
+[Unit]
+Description=Quickly capture thoughts
+
+[Service]
+ExecStart=/usr/bin/capture serve
+User=nginx
+
+[Install]
+WantedBy=multi-user.target

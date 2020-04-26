@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Capture</title>
+
+        <style>
+            html {
+                font-family: sans-serif;
+            }
+
+            body {
+                margin: 0;
+                display: grid;
+                grid-template-areas:
+                    "header"
+                    "nav"
+                    "main";
+                grid-template-columns: 1fr;
+                grid-template-rows: max-content max-content auto max-content;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            header {
+                grid-area: header;
+                background-color: hsl(305, 21%, 43%);
+                color: white;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+                padding: 0 1rem;
+            }
+
+            form {
+                display: contents;
+            }
+
+            nav {
+                grid-area: nav;
+                background-color: hsl(305, 25%, 59%);
+                color: white;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+                display: flex;
+            }
+
+            li label {
+                padding: 0.5rem 1rem;
+                display: block;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            li label:hover {
+                background-color: hsl(305, 21%, 43%);
+            }
+
+            input {
+                display: none;
+            }
+
+            input[type="radio"]:checked + label {
+                background-color: hsl(305, 21%, 43%);
+            }
+
+            main {
+                grid-area: main;
+                display: flex;
+                align-items: stretch;
+                flex-direction: column;
+                flex: 1 1 auto;
+            }
+
+            textarea {
+                flex: 1 1 auto;
+                font-size: 1.2rem;
+            }
+
+            button {
+                border: none;
+                background-color: hsl(305, 25%, 59%);
+                color: white;
+                font-weight: bold;
+                padding: 1rem 2rem;
+                font-size: 1.2rem;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: hsl(305, 21%, 43%);
+            }
+
+        </style>
+    </head>
+    <body>
+        <header><h1>Capture</h1></header>
+
+        <form action="/capture" method="POST">
+            <nav>
+                <ul>
+                    {{- range $i, $c := .contexts}}
+                    <li>
+                        <input id="context_{{$c}}" type="radio" name="context" value="{{$c}}" {{if eq $i 0 }}checked{{end}}>
+                        <label for="context_{{$c}}">{{$c}}</label>
+                    </li>
+                    {{- else}}
+                    <li><a href="#">General</a></li>
+                    {{end}}
+                </ul>
+            </nav>
+
+            <main>
+                <textarea name="message" placeholder="Something to capture" autofocus></textarea>
+            </main>
+
+            <input type="hidden" name="csrf_token" value="{{.token}}">
+            <button type="submit">Capture</button>
+        </form>
+    </body>
+</html>

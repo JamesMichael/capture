@@ -1,0 +1,6 @@
+{
+    "contexts": {
+        "home": "home.txt",
+        "work": "work.txt"
+    }
+}
